@@ -62,7 +62,7 @@ $: git pull
 
 ### Unit
 
-Each of our Web Components comes with test cases. Feel free to check them out within the `./tests` root folder. When adding or or updating functionality, please ensure it is covered through our tests and that the new tests pass by running `pnpm test`.
+Each of our Web Components comes with test cases. Feel free to check them out within the `./tests` root folder. When adding or or updating functionality, please ensure it is covered through our tests and that the new tests pass by running `yarn test`.
 
 ## ✍️ Commit
 

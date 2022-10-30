@@ -23,15 +23,18 @@ jobs:
 
       - name: Enable Corepack
         run: corepack enable
+      
+      - name: Setup yarn
+        run: npm install -g yarn
 
       - name: Install dependencies
-        run: pnpm install
+        run: yarn install
 
       - name: Build the release
-        run: pnpm run build
+        run: yarn build
 
       - name: Publish to npm
-        run: pnpm publish --access public --no-git-checks
+        run: yarb publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
