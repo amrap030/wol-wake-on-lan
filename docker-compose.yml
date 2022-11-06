@@ -8,6 +8,7 @@ services:
       - "3000:3000"
     restart: "unless-stopped"
     environment:
+      - DB_DIR=${DB_DIR:-/var/db/wol}
       - LOG_DIR=${LOG_DIR:-/var/log/wol}
       - LOG_FORMAT=${LOG_FORMAT:-combined}
       - MAC_ADDRESS=${MAC_ADDRESS}
