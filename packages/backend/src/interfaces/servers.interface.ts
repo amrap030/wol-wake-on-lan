@@ -10,6 +10,7 @@ export interface Server {
 export interface WakeupParams {
   macAddress: string;
   password: string;
+  token: string;
 }
 
 export interface RequestWithServer extends Request {

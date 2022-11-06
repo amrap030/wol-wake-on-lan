@@ -1,8 +1,10 @@
 import wol from "wol";
 import serverModel from "@/models/servers.model";
+import { db } from "@/database/totp.database";
 import { Server, WakeupParams } from "@interfaces/servers.interface";
 import { HttpException } from "@/exceptions/HttpException";
 import { isMacAddress, getNetworkConfig } from "@/utils/network";
+import { verifyToken } from "@/utils/totp";
 
 /**
  * Get all servers
@@ -19,7 +21,7 @@ export const getServers = async () => {
  * Wake up server
  */
 export const wakeup = async (params: WakeupParams) => {
-  const { macAddress, password } = params;
+  const { macAddress, password, token } = params;
 
   if (!isMacAddress(macAddress))
     throw new HttpException(400, "Not a valid MAC Address");
@@ -28,6 +30,12 @@ export const wakeup = async (params: WakeupParams) => {
   if (!server) throw new HttpException(400, "Unknown MAC Address");
   if (server.password !== password)
     throw new HttpException(400, "Incorrect password");
+
+  const is2faEnabled: boolean = await db.getData("/enabled");
+  if (!is2faEnabled) throw new HttpException(400, "2fa currently not enabled");
+
+  const isVerified = await verifyToken(token);
+  if (!isVerified) throw new HttpException(400, "Invalid token");
 
   const config = await getNetworkConfig(macAddress);
 

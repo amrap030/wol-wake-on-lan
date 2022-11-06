@@ -7,6 +7,7 @@ const scopes = [
   "release",
   "readme",
   "build",
+  "backend",
 ];
 
 /** @type {import('cz-git').UserConfig} */

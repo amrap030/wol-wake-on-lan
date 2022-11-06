@@ -168,3 +168,6 @@ lib-cov
 logs
 node_modules
 temp
+
+# App
+totp.json

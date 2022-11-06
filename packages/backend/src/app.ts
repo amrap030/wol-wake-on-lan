@@ -9,14 +9,19 @@ import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN } from "@config";
 import serversRouter from "@routes/servers.route";
+import totpRouter from "@routes/totp.route";
 import errorMiddleware from "@middlewares/error.middleware";
 import { logger, stream } from "@utils/logger";
-import validateEnv from "@utils/validateEnv";
 import path from "path";
+import { initDB } from "@/database/totp.database";
+import qrcodeTerminal from "qrcode-terminal";
+import speakeasy from "speakeasy";
+import type { Secret } from "@/interfaces/totp.interface";
+import { db } from "@/database/totp.database";
 
-validateEnv();
+initDB();
 
-const initializeMiddlewares = () => {
+const initializeMiddlewares = (): void => {
   app.use(morgan(LOG_FORMAT, { stream }));
   app.use(cors({ origin: ORIGIN, credentials: true }));
   app.use(hpp());
@@ -27,12 +32,13 @@ const initializeMiddlewares = () => {
   app.use(cookieParser());
 };
 
-const initializeRoutes = () => {
+const initializeRoutes = (): void => {
   app.use("/v1/servers", serversRouter());
+  app.use("/v1/totp", totpRouter());
   app.use(express.static(path.join(__dirname, "../frontend")));
 };
 
-const initializeSwagger = () => {
+const initializeSwagger = (): void => {
   const options = {
     swaggerDefinition: {
       info: {
@@ -48,8 +54,14 @@ const initializeSwagger = () => {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 };
 
-const initializeErrorHandling = () => {
+const initializeErrorHandling = (): void => {
   app.use(errorMiddleware);
+};
+
+const setup2fa = async (): Promise<string> => {
+  const secret: Secret = speakeasy.generateSecret();
+  await db.push("/", { secret, enabled: false });
+  return secret.otpauth_url;
 };
 
 const app = express();
@@ -59,9 +71,15 @@ initializeRoutes();
 initializeSwagger();
 initializeErrorHandling();
 
-app.listen(PORT || 3000, () => {
+app.listen(PORT || 3000, async () => {
   logger.info(`=================================`);
   logger.info(`======= ENV: ${NODE_ENV} =======`);
   logger.info(`🚀 App listening on the port ${PORT || 3000}`);
+  logger.info(`=================================`);
+
+  logger.info(`=================================`);
+  logger.info(`======= OTP AUTH =======`);
+  const url: string = await setup2fa();
+  qrcodeTerminal.generate(url, { small: true });
   logger.info(`=================================`);
 });
