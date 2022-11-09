@@ -58,10 +58,15 @@ const initializeErrorHandling = (): void => {
   app.use(errorMiddleware);
 };
 
-const setup2fa = async (): Promise<string> => {
-  const secret: Secret = speakeasy.generateSecret();
-  await db.push("/", { secret, enabled: false });
-  return secret.otpauth_url;
+const setup2fa = async (): Promise<Secret> => {
+  try {
+    const currentSecret: Secret = await db.getData("/secret");
+    return currentSecret;
+  } catch (e: any) {
+    const secret: Secret = speakeasy.generateSecret();
+    await db.push("/", { secret, enabled: false });
+    return secret;
+  }
 };
 
 const app = express();
@@ -79,7 +84,8 @@ app.listen(PORT || 3000, async () => {
 
   logger.info(`=================================`);
   logger.info(`======= OTP AUTH =======`);
-  const url: string = await setup2fa();
-  qrcodeTerminal.generate(url, { small: true });
+  const secret: Secret = await setup2fa();
+  logger.info(`==== SECRET: ${secret.base32} ====`);
+  qrcodeTerminal.generate(secret.otpauth_url, { small: true });
   logger.info(`=================================`);
 });
