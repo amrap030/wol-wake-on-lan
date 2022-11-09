@@ -12,4 +12,5 @@ export const {
   MAC_ADDRESS,
   PASSWORD,
   DB_DIR,
+  IP_ADDRESS,
 } = validateEnv();

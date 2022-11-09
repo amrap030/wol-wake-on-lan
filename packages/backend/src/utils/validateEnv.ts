@@ -1,7 +1,7 @@
 import { cleanEnv, host, port, str } from "envalid";
 
-export const validateEnv = () => {
-  return cleanEnv(process.env, {
+export const validateEnv = () =>
+  cleanEnv(process.env, {
     NODE_ENV: str({
       choices: ["production", "development"],
       default: "production",
@@ -18,8 +18,8 @@ export const validateEnv = () => {
     ORIGIN: process.env.NODE_ENV === "development" ? str() : host(),
     SERVER: str(),
     PASSWORD: str(),
+    IP_ADDRESS: str(),
     DB_DIR: str({ default: "/var/db/wol", devDefault: "." }),
   });
-};
 
 export default validateEnv;

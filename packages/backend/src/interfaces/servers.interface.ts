@@ -4,6 +4,8 @@ export interface Server {
   name: string;
   password: string;
   macAddress: string;
+  id: number;
+  ipAddress: string;
   broadcastIp?: string;
 }
 

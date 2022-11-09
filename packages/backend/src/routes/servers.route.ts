@@ -19,6 +19,11 @@ const serversRouter = () => {
     async (req, res, next) => await ServersController.wakeup(req, res, next)
   );
 
+  router.post(
+    "/ping/:id",
+    async (req, res, next) => await ServersController.ping(req, res, next)
+  );
+
   return router;
 };
 

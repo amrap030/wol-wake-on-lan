@@ -5,16 +5,25 @@ import { Server, WakeupParams } from "@interfaces/servers.interface";
 import { HttpException } from "@/exceptions/HttpException";
 import { isMacAddress, getNetworkConfig } from "@/utils/network";
 import { verifyToken } from "@/utils/totp";
+import ping from "ping";
+import servers from "@/models/servers.model";
 
 /**
  * Get all servers
  */
-export const getServers = async () => {
+export const getServers = async (): Promise<
+  {
+    name: string;
+    macAddress: string;
+    id: number;
+  }[]
+> => {
   const servers: Server[] = serverModel;
-
-  servers.forEach((server) => delete server.password);
-
-  return servers;
+  return servers.map((server) => ({
+    name: server.name,
+    macAddress: server.macAddress,
+    id: server.id,
+  }));
 };
 
 /**
@@ -22,11 +31,15 @@ export const getServers = async () => {
  */
 export const wakeup = async (params: WakeupParams) => {
   const { macAddress, password, token } = params;
+  console.log(params);
 
   if (!isMacAddress(macAddress))
     throw new HttpException(400, "Not a valid MAC Address");
 
   const server = serverModel.find((server) => server.macAddress === macAddress);
+  console.log(password);
+
+  console.log(server.password);
   if (!server) throw new HttpException(400, "Unknown MAC Address");
   if (server.password !== password)
     throw new HttpException(400, "Incorrect password");
@@ -45,4 +58,16 @@ export const wakeup = async (params: WakeupParams) => {
   });
 };
 
-export default { getServers, wakeup };
+/**
+ * Ping server to check if server is alive
+ */
+export const pingServer = async (hostId: string): Promise<boolean> => {
+  const server = servers.find((server: Server) => server.id === Number(hostId));
+  if (server) {
+    const pingResult = await ping.promise.probe(server.ipAddress);
+    return pingResult.alive;
+  }
+  return false;
+};
+
+export default { getServers, wakeup, pingServer };

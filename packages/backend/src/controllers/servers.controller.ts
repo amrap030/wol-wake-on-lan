@@ -1,4 +1,4 @@
-import { Server, WakeupParams } from "@interfaces/servers.interface";
+import { WakeupParams } from "@interfaces/servers.interface";
 import serverService from "@services/servers.service";
 import type { NextFunction, Request, Response } from "express";
 
@@ -11,7 +11,7 @@ export const getServers = async (
   next: NextFunction
 ) => {
   try {
-    const servers: Server[] = await serverService.getServers();
+    const servers = await serverService.getServers();
     return res.status(200).json(servers);
   } catch (e: any) {
     next(e);
@@ -35,4 +35,17 @@ export const wakeup = async (
   }
 };
 
-export default { getServers, wakeup };
+/**
+ * Ping server
+ */
+export const ping = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  try {
+    const isAlive = await serverService.pingServer(id);
+    return res.status(200).json(isAlive);
+  } catch (e: any) {
+    next(e);
+  }
+};
+
+export default { getServers, wakeup, ping };
