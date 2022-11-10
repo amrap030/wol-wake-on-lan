@@ -1,21 +1,10 @@
-// import { createApp } from "vue";
-// import { createPinia } from "pinia";
-// import "./tailwind.css";
-// import App from "./App.vue";
-// import router from "./router";
-
-// const app = createApp(App);
-
-// app.use(createPinia());
-// app.use(router);
-
-// app.mount("#app");
 import { createApp } from "vue";
 import App from "./App.vue";
 import { router, setupRouterAndHead } from "./router";
 import "./tailwind.css";
 import { setupStore } from "@/store";
 import { setupRouterGuard } from "@/router/guard";
+import Notifications from "notiwind";
 
 async function bootstrap() {
   const app = createApp(App);
@@ -27,6 +16,7 @@ async function bootstrap() {
   setupRouterAndHead(app);
   setupRouterGuard(router);
 
+  app.use(Notifications);
   app.mount("#app");
 }
 

@@ -47,7 +47,18 @@
       >
     </div>
   </div>
-  <WolModal :isOpen="isOpen" :selected="selected" @close="isOpen = false" />
+  <WolModal
+    :isOpen="isOpen"
+    :selected="selected"
+    @close="isOpen = false"
+    @boot="
+      (success) => {
+        isOpen = false;
+        prompt(success);
+      }
+    "
+  />
+  <LayoutNotification />
 </template>
 
 <script setup lang="ts">
@@ -55,14 +66,16 @@ import { useHead } from "@vueuse/head";
 import { CogIcon, ServerIcon } from "@heroicons/vue/24/solid";
 import { WolModal } from "@/components/Modal";
 import { onMounted, ref } from "vue";
+import { LayoutNotification } from "@/layout/src/Notification";
+import { notify } from "notiwind";
 
 useHead({
   title: "Home",
 });
 
-const isOpen = ref(false);
-const servers = ref([]);
-const selected = ref({});
+const isOpen = ref<boolean>(false);
+const servers = ref<{ isAlive: boolean; name: string; id: number }[]>([]);
+const selected = ref<{ isAlive: boolean; name: string; id: number } | {}>({});
 
 onMounted(async () => {
   const data = await fetch("http://localhost:3000/v1/servers");
@@ -86,4 +99,16 @@ setInterval(async () => {
     server.isAlive = await data.json();
   });
 }, 5000);
+
+const prompt = (success: boolean) => {
+  notify(
+    {
+      group: "app",
+      title: success ? "Success" : "Error",
+      type: success ? "success" : "error",
+      text: success ? "Server will boot soon!" : "Something went wrong!",
+    },
+    4000
+  );
+};
 </script>

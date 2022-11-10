@@ -162,7 +162,7 @@ defineProps({
   },
 });
 
-defineEmits(["close"]);
+const emits = defineEmits(["close", "boot"]);
 
 const password = ref();
 const input1 = ref();
@@ -205,7 +205,7 @@ const focusNext = (index: number) => {
 
 const wakeonlan = async () => {
   try {
-    await fetch("http://localhost:3000/v1/servers/wakeonlan", {
+    const data = await fetch("http://localhost:3000/v1/servers/wakeonlan", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -223,8 +223,10 @@ const wakeonlan = async () => {
         ].join(""),
       }),
     });
+    if (!(await data.ok)) throw new Error();
+    emits("boot", true);
   } catch (e: any) {
-    console.log(e);
+    emits("boot", false);
   }
 };
 </script>

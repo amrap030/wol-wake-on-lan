@@ -83,12 +83,15 @@
       Activate
     </button>
   </div>
+  <LayoutNotification />
 </template>
 
 <script setup lang="ts">
 import { useHead } from "@vueuse/head";
 import { ref } from "vue";
 import { useFocus } from "@vueuse/core";
+import { notify } from "notiwind";
+import { LayoutNotification } from "@/layout/src/Notification";
 
 useHead({
   title: "Settings",
@@ -134,7 +137,7 @@ const focusNext = (index: number) => {
 
 const activate = async () => {
   try {
-    await fetch("http://localhost:3000/v1/totp/verify", {
+    const data = await fetch("http://localhost:3000/v1/totp/verify", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -150,8 +153,26 @@ const activate = async () => {
         ].join(""),
       }),
     });
+    if (!(await data.ok)) throw new Error();
+    notify(
+      {
+        group: "app",
+        title: "Success",
+        type: "success",
+        text: "2 factor authentication enabled!",
+      },
+      4000
+    );
   } catch (e: any) {
-    console.log(e);
+    notify(
+      {
+        group: "app",
+        title: "Error",
+        type: "error",
+        text: "Wrong token!",
+      },
+      4000
+    );
   }
 };
 </script>

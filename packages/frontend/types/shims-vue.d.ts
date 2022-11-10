@@ -12,7 +12,5 @@ declare module "*.svg" {
 
 declare module "notiwind";
 declare module "caf";
-declare module "eth-provider";
 declare module "qrcode";
-declare module "vue-horizontal";
 declare module "@vueuse/router";
