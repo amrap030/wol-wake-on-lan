@@ -1,6 +1,6 @@
 {
   "name": "@amrap030/wol-wake-on-lan",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Minimal wake-on-lan server to spin up your homeserver.",
   "author": "Kevin Hertwig <kevin.hertwig@gmail.com>",
   "license": "MIT",
@@ -28,11 +28,11 @@
     "dev": "unbuild --stub",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "fresh": "rimraf node_modules/ pnpm-lock.yaml && pnpm i",
+    "fresh": "rimraf node_modules/ yarn.lock && yarn install",
     "commit": "git cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "prepublishOnly": "pnpm run build",
-    "release": "npx bumpp package.json ./packages/frontend/package.json ./packages/backend/package.json --execute 'pnpm run changelog' --all",
+    "prepublishOnly": "yarn build",
+    "release": "npx bumpp package.json ./packages/frontend/package.json ./packages/backend/package.json --execute 'yarn changelog' --all",
     "start": "esno src/index.ts",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
