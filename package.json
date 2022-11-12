@@ -1,6 +1,6 @@
 {
   "name": "@amrap030/wol-wake-on-lan",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Minimal wake-on-lan server to spin up your homeserver.",
   "author": "Kevin Hertwig <kevin.hertwig@gmail.com>",
   "license": "MIT",
