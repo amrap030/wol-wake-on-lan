@@ -3,16 +3,14 @@
 This folder contains GitHub configurations for the project, including these features:
 
 - GitHub Actions (./workflows)
-  - [CI][CI] - all CI jobs for the project
+  - [CI][ci] - all CI jobs for the project
     - lints the code
     - `typecheck`s the code
     - automatically fixes & applies code style updates
     - runs tests (unit, end-to-end)
     - runs on `ubuntu-latest` with `node-versions` set to `[16x, 18x]`
-  - [Lock Closed Issues][Lock Closed Issues] - Locks all closed issues after 14 days of being closed
-  - [Release][Release] - automates the release process & changelog generation
-- Renovate
-  - automatically updates all the dependencies listed in all package.json files throughout the monorepo
+  - [Lock Closed Issues][lock closed issues] - Locks all closed issues after 14 days of being closed
+  - [Release][release] - automates the release process & changelog generation
 
 Aside from these implemented features, this folder also contains the issue templates used to create new GitHub issues.
 
@@ -32,6 +30,6 @@ The MIT License (MIT). Please see [LICENSE](../LICENSE.md) for more information.
 
 Made with ❤️
 
-[CI]: ./workflows/ci.yml
-[Release]: ./workflows/release.yml
-[Lock Closed Issues]: ./workflows/lock-closed-issues.yml
+[ci]: ./workflows/ci.yml
+[release]: ./workflows/release.yml
+[lock closed issues]: ./workflows/lock-closed-issues.yml

@@ -3,7 +3,7 @@
 
 # WOL - Wake on Lan
 
-This is a minimal wake-on-lan server to spin up your homeserver from anywhere in the world.
+This is a minimal Wake-on-Lan (WoL) server to spin up your homeserver from anywhere in the world. It aims to provide reasonable security, since the application is probably internet-facing. Therefore, every server is protected with a password as well as a second factor, which is a totp one-time passcode with [Speakeasy](https://github.com/speakeasyjs/speakeasy).
 
 ## 💡 Get Started
 
@@ -12,7 +12,8 @@ Luckily, it's incredibly easy to get your package development started:
 ```bash
 # you may use this GitHub template or the following command:
 # TODO
-``` 
+```
+
 ## 🧪 Testing
 
 ```bash
@@ -40,12 +41,11 @@ The MIT License (MIT). Please see [LICENSE](LICENSE.md) for more information.
 Made with ❤️
 
 <!-- Badges -->
+
 [npm-version-src]: https://img.shields.io/npm/v/@ow3/dummy-ts-pkg?style=flat-square
 [npm-version-href]: https://npmjs.com/package/@ow3/dummy-ts-pkg
-
 [npm-downloads-src]: https://img.shields.io/npm/dm/@ow3/dummy-ts-pkg?style=flat-square
 [npm-downloads-href]: https://npmjs.com/package/@ow3/dummy-ts-pkg
-
 [github-actions-src]: https://img.shields.io/github/workflow/status/openwebstacks/ts-starter/CI/main?style=flat-square
 [github-actions-href]: https://github.com/openwebstacks/ts-starter/actions?query=workflow%3Aci
 
