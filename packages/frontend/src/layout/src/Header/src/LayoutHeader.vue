@@ -21,8 +21,11 @@
 
 <script setup lang="ts">
 import { HomeIcon, CogIcon } from "@heroicons/vue/24/solid";
+import type { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
 
-const components = {
+const components: {
+  [key: string]: FunctionalComponent<HTMLAttributes & VNodeProps, {}>;
+} = {
   HomeIcon,
   CogIcon,
 };
