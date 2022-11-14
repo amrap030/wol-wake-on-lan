@@ -28,9 +28,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build & Push
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
         uses: docker/build-push-action@v2.10.0
         with:
           context: .
           file: Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wol-wake-on-lan:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/wol-wake-on-lan:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/wol-wake-on-lan:${GITHUB_REF:11}
