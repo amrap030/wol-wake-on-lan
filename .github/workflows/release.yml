@@ -39,4 +39,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/wol-wake-on-lan:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/wol-wake-on-lan:${{GITHUB_REF:11}}
+            ${{ secrets.DOCKERHUB_USERNAME }}/wol-wake-on-lan:${{ github.event.release.tag_name:1 }}
