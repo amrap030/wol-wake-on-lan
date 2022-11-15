@@ -30,7 +30,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build & Push
         env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+          RELEASE_VERSION: ${{ github.ref_name }}
         uses: docker/build-push-action@v3
         with:
           context: .
@@ -39,4 +39,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/wol-wake-on-lan:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/wol-wake-on-lan:${{ github.event.release.tag_name:1 }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/wol-wake-on-lan:${{ github.ref_name }}
