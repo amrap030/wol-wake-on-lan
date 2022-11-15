@@ -16,4 +16,5 @@ services:
       - PASSWORD=${PASSWORD}
       - PORT=${PORT:-3000}
       - SERVER=${SERVER}
+      - IP_ADDRESS=${IP_ADDRESS}
     network_mode: "host"
