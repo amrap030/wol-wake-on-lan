@@ -29,7 +29,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Extract Package Version
-        run: PACKAGE_VERSION=$(grep version package.json | awk -F \" '{print $4}')
+        run: echo "PACKAGE_VERSION=$(grep version package.json | awk -F \" '{print $4}')" >> $GITHUB_ENV
       - name: Build & Push
         uses: docker/build-push-action@v3
         with:
@@ -39,4 +39,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/wol-wake-on-lan:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/wol-wake-on-lan:$PACKAGE_VERSION
+            ${{ secrets.DOCKERHUB_USERNAME }}/wol-wake-on-lan:${{ env.PACKAGE_VERSION }}
