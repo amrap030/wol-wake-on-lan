@@ -1,3 +1,12 @@
+## [0.0.3](https://github.com/amrap030/wol-wake-on-lan/compare/v0.0.2...v0.0.3) (2022-11-17)
+
+
+### Bug Fixes
+
+* compiled files include `.ts` extension fixed with fixed swc version 1.3.16 ([cc7839a](https://github.com/amrap030/wol-wake-on-lan/commit/cc7839aa40ceb1e423ef7545116ea833578ee37b))
+
+
+
 ## [0.0.2](https://github.com/amrap030/wol-wake-on-lan/compare/v0.0.1...v0.0.2) (2022-11-15)
 
 
