@@ -18,3 +18,9 @@ Dockerfile
 docker-compose.yml
 
 yarn.lock
+.env
+
+node_modules
+dist
+packages/backend/dist
+packages/frontend/dist
