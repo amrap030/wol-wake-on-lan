@@ -1,3 +1,12 @@
+## [0.0.4](https://github.com/amrap030/wol-wake-on-lan/compare/v0.0.3...v0.0.4) (2022-11-18)
+
+
+### Bug Fixes
+
+* entrypoint for serving frontend ([9a1d155](https://github.com/amrap030/wol-wake-on-lan/commit/9a1d15518b4e3f7b365daa0c9ef460954f4b189f))
+
+
+
 ## [0.0.3](https://github.com/amrap030/wol-wake-on-lan/compare/v0.0.2...v0.0.3) (2022-11-17)
 
 
