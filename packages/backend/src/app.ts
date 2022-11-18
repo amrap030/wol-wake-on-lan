@@ -35,7 +35,13 @@ const initializeMiddlewares = (): void => {
 const initializeRoutes = (): void => {
   app.use("/v1/servers", serversRouter());
   app.use("/v1/totp", totpRouter());
-  app.use(express.static(path.join(__dirname, "../frontend")));
+  app.use(
+    express.static(
+      process.env.NODE_ENV === "development"
+        ? path.join(__dirname, "../frontend")
+        : "/app/packages/frontend/dist"
+    )
+  );
 };
 
 const initializeSwagger = (): void => {
