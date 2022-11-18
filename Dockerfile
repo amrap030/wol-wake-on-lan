@@ -26,6 +26,4 @@ COPY --from=builder ./app/packages/frontend/package*.json ./packages/frontend/
 
 RUN yarn install --production --network-timeout 1000000
 
-EXPOSE 3000
-
 CMD ["yarn","start:prod"]
