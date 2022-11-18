@@ -1,3 +1,7 @@
+## [0.0.5](https://github.com/amrap030/wol-wake-on-lan/compare/v0.0.4...v0.0.5) (2022-11-18)
+
+
+
 ## [0.0.4](https://github.com/amrap030/wol-wake-on-lan/compare/v0.0.3...v0.0.4) (2022-11-18)
 
 

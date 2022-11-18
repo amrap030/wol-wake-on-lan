@@ -1,6 +1,6 @@
 {
   "name": "@amrap030/wol-backend",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "scripts": {
     "start": "cross-env NODE_ENV=production node dist/app.js",
