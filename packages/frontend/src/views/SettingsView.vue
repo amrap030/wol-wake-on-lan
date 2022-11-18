@@ -137,22 +137,25 @@ const focusNext = (index: number) => {
 
 const activate = async () => {
   try {
-    const data = await fetch("http://localhost:3000/v1/totp/verify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: [
-          otp1.value,
-          otp2.value,
-          otp3.value,
-          otp4.value,
-          otp5.value,
-          otp6.value,
-        ].join(""),
-      }),
-    });
+    const data = await fetch(
+      `${import.meta.env.VITE_API || "http://localhost:3000"}/v1/totp/verify`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: [
+            otp1.value,
+            otp2.value,
+            otp3.value,
+            otp4.value,
+            otp5.value,
+            otp6.value,
+          ].join(""),
+        }),
+      }
+    );
     if (!(await data.ok)) throw new Error();
     notify(
       {

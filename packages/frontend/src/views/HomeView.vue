@@ -73,19 +73,25 @@ useHead({
   title: "Home",
 });
 
+console.log(import.meta.env.VITE_PORT);
+
 const isOpen = ref<boolean>(false);
 const servers = ref<{ isAlive: boolean; name: string; id: number }[]>([]);
 const selected = ref<{ isAlive: boolean; name: string; id: number } | {}>({});
 
 onMounted(async () => {
-  const data = await fetch("http://localhost:3000/v1/servers");
+  const data = await fetch(
+    `${import.meta.env.VITE_API || "http://localhost:3000"}/v1/servers`
+  );
   servers.value = await data.json();
 });
 
 setInterval(async () => {
   servers.value.forEach(async (server) => {
     const data = await fetch(
-      `http://localhost:3000/v1/servers/ping/${server.id}`,
+      `${import.meta.env.VITE_API || "http://localhost:3000"}/v1/servers/ping/${
+        server.id
+      }`,
       {
         method: "POST",
         headers: {

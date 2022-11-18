@@ -205,24 +205,29 @@ const focusNext = (index: number) => {
 
 const wakeonlan = async () => {
   try {
-    const data = await fetch("http://localhost:3000/v1/servers/wakeonlan", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        macAddress: "d0:50:99:c0:e7:52",
-        password: password.value,
-        token: [
-          otp1.value,
-          otp2.value,
-          otp3.value,
-          otp4.value,
-          otp5.value,
-          otp6.value,
-        ].join(""),
-      }),
-    });
+    const data = await fetch(
+      `${
+        import.meta.env.VITE_API || "http://localhost:3000"
+      }/v1/servers/wakeonlan`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          macAddress: "d0:50:99:c0:e7:52",
+          password: password.value,
+          token: [
+            otp1.value,
+            otp2.value,
+            otp3.value,
+            otp4.value,
+            otp5.value,
+            otp6.value,
+          ].join(""),
+        }),
+      }
+    );
     if (!(await data.ok)) throw new Error();
     emits("boot", true);
   } catch (e: any) {
