@@ -17,7 +17,6 @@ jest.config.js
 Dockerfile
 docker-compose.yml
 
-yarn.lock
 .env
 
 node_modules
